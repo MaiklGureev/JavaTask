@@ -47,8 +47,8 @@ public class Product implements Prototype,Cloneable{
 
     public void editDetailId(String detailName, int newId){
         for(int a =0;a<detailSize;a++){
-            if(details[a].getId()==newId){
-                details[a].setDetailName(detailName);
+            if(details[a].getDetailName().equals(detailName)){
+                details[a].setId(newId);
                 break;
             }
         }
