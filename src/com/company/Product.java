@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.Random;
 
 public class Product implements Prototype,Cloneable{
@@ -62,8 +63,9 @@ public class Product implements Prototype,Cloneable{
     public Object clone() {
         try {
             Product product = (Product)super.clone();
+            product.details = product.details.clone();
             for(int a=0;a<detailSize;a++){
-                product.details[a] = new Detail(details[a].getId(),details[a].getDetailName());
+                product.details[a] = (Detail) product.details[a].clone();
             }
             return product;
         } catch (CloneNotSupportedException e) {
@@ -72,7 +74,7 @@ public class Product implements Prototype,Cloneable{
         return null;
     }
 
-    public class Detail {
+    public class Detail implements Cloneable {
         private int id;
         private String detailName;
 
@@ -95,6 +97,14 @@ public class Product implements Prototype,Cloneable{
 
         public String getDetailName() {
             return detailName;
+        }
+
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            Detail detail = (Detail) super.clone();
+            detail.setId(id);
+            detail.setDetailName(detailName);
+            return detail;
         }
 
         @Override
